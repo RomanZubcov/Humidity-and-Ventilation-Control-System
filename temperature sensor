@@ -1,0 +1,54 @@
+//Include librariile necesare
+#include <DHT.h>
+
+//Setam pinii utilizati pentru senzorul de umiditate si pentru ventilator
+#define DHTPIN A0
+#define FAN_PIN 5
+
+//Definim tipul de senzor si instanta acestuia
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+//Definim variabile pentru nivelul de umiditate si pragul de activare a ventilatorului
+float humidity = 0;
+float threshold = 60;
+
+//Definim o variabila pentru starea ventilatorului
+int fanState = 0;
+
+void setup() {
+  //Setam pinul ventilatorului ca output
+  pinMode(FAN_PIN, OUTPUT);
+
+  //Pornim serial monitor pentru a afisa valorile citite de la senzor
+  Serial.begin(9600);
+
+  //Initializam senzorul de umiditate
+  dht.begin();
+}
+
+void loop() {
+  //Citim nivelul de umiditate de la senzor
+  humidity = dht.readHumidity();
+
+  //Afisam nivelul de umiditate citit
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print("%");
+
+  //Verificam daca nivelul de umiditate este peste pragul setat
+  if (humidity > threshold) {
+    //Pornim ventilatorul
+    digitalWrite(FAN_PIN, HIGH);
+    fanState = 1;
+    Serial.println(" - Fan on");
+  } else {
+    //Oprim ventilatorul
+    digitalWrite(FAN_PIN, LOW);
+    fanState = 0;
+    Serial.println(" - Fan off");
+  }
+
+  //Asteptam 2 secunde inainte de a relua citirea nivelului de umiditate
+  delay(2000);
+}
