@@ -1,20 +1,55 @@
-Humidity and Ventilation Control System for Garage with Arduino
+# Humidity-Controlled Fan System
 
-The operating principle of this project is to monitor the humidity level in a garage and ventilate the space when the humidity level becomes too high. This project uses an Arduino board to read the humidity level in the garage and control the fan based on this reading.
+## Overview
 
-Before starting the project, you need to connect a humidity sensor to the Arduino board and connect a fan to a digital pin on the board. Then, you can begin programming the Arduino board to read the humidity level and control the fan.
+This project is a simple Arduino-based system that controls a fan based on the humidity level detected by a DHT11 sensor. When the humidity level exceeds a predefined threshold, the fan is turned on to reduce the humidity to a comfortable level. This can be particularly useful in environments where maintaining a certain humidity level is critical, such as in greenhouses or storage rooms.
 
-The first step in programming the Arduino board is to read the humidity level from the sensor connected to pin A0 and store it in a variable. Then, check if the humidity level is higher than a set threshold, and if it is, turn on the fan connected to the digital pin.
+## Requirements
 
-If the humidity level drops below the set threshold, stop the fan and resume reading the humidity level. To ensure continuous operation of the device, the program runs in an infinite loop.
+- **Hardware:**
+  - Arduino board (Uno, Mega, Nano, etc.)
+  - DHT11 humidity and temperature sensor
+  - Fan (compatible with Arduino voltage and current specifications)
+  - Breadboard and jumper wires
 
-In conclusion, by monitoring the humidity level and controlling the fan, this device can ensure a suitable environment in the garage, preventing the growth of mold and thus protecting the objects and equipment stored inside.
+- **Software:**
+  - Arduino IDE
+  - DHT sensor library
 
-To create this project, the following components are required:
+## Installation
 
-1.Arduino board
-2.Humidity sensor DHT 11
-3.Fan 5v (Evercool 25x25x10mm 5 Volt)
-4.Resistors
-5.Connection cables(jumpers)
-6.Breadboard.
+### Hardware Setup
+
+1. **Connect the DHT11 Sensor:**
+   - Connect the VCC pin of the DHT11 sensor to the 5V pin on the Arduino.
+   - Connect the GND pin to one of the GND pins on the Arduino.
+   - Connect the data pin of the DHT11 sensor to pin A0 on the Arduino.
+
+2. **Connect the Fan:**
+   - Connect the positive terminal of the fan to pin 5 on the Arduino through a transistor if needed to handle the current.
+   - Connect the negative terminal of the fan to one of the GND pins on the Arduino.
+
+### Software Setup
+
+1. **Install the Arduino IDE:** Download and install the Arduino IDE from the official Arduino website.
+
+2. **Install the DHT Sensor Library:**
+   - Open the Arduino IDE.
+   - Go to `Sketch` > `Include Library` > `Manage Libraries...`
+   - Search for "DHT sensor library" and install it.
+
+3. **Load and Configure the Sketch:**
+   - Copy the provided C++ code into a new sketch in the Arduino IDE.
+   - Make sure to adjust the `DHTPIN` and `FAN_PIN` definitions if you've connected your components to different pins.
+   - Adjust the `threshold` variable if you wish to change the humidity level at which the fan activates.
+
+## Usage
+
+- Upload the sketch to your Arduino board using the Arduino IDE.
+- The system will automatically start monitoring the humidity level.
+- The serial monitor will display the current humidity level and the state of the fan ("Fan on" or "Fan off").
+- The fan will turn on when the humidity level exceeds the set threshold and turn off when the humidity drops below the threshold.
+
+## Note
+
+This project is designed for educational purposes and provides a basic example of how to control devices based on sensor inputs using an Arduino. It can be expanded with additional features such as temperature-based control, remote monitoring, or integration with home automation systems.
